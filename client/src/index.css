@@ -1,0 +1,433 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* ============================================================
+   CORN — Design System
+   ============================================================ */
+
+:root {
+  --corn-gold: #F5C842;
+  --husk-green: #3B5323;
+  --silk-cream: #FAF3E0;
+  --burnt-amber: #C8702A;
+  --deep-soil: #1A1208;
+  --soft-white: #FEFDF8;
+  --muted-sage: #7D9070;
+  --translucent-gold: rgba(245, 200, 66, 0.12);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto; /* Let GSAP / Lenis control this */
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--soft-white);
+  color: var(--deep-soil);
+  font-family: 'Lora', Georgia, serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ---- Custom Cursor ---- */
+.cursor {
+  width: 12px;
+  height: 12px;
+  background: var(--corn-gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+  mix-blend-mode: difference;
+}
+
+.cursor-follower {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--corn-gold);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.35s ease, width 0.3s ease, height 0.3s ease;
+  opacity: 0.6;
+}
+
+/* ---- Smooth Scroll ---- */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ---- Sections ---- */
+.section {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ---- Media defaults ---- */
+img, video {
+  display: block;
+  max-width: 100%;
+}
+
+video {
+  object-fit: cover;
+}
+
+/* ---- Typography Scale ---- */
+.eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--corn-gold);
+}
+
+.display-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  line-height: 0.9;
+  color: var(--silk-cream);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--deep-soil);
+}
+
+.body-text {
+  font-family: 'Lora', serif;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--muted-sage);
+}
+
+.mono-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ---- Grain texture overlay ---- */
+.grain-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* ---- Warm image filter ---- */
+.warm-filter {
+  filter: sepia(0.15) saturate(1.2) brightness(0.97);
+}
+
+/* ---- Gold divider ---- */
+.gold-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--corn-gold);
+  display: block;
+}
+
+/* ---- Scroll indicator ---- */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.scroll-indicator span {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: var(--silk-cream);
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.scroll-arrow {
+  width: 20px;
+  height: 30px;
+  border: 1.5px solid rgba(250, 243, 224, 0.4);
+  border-radius: 10px;
+  position: relative;
+}
+
+.scroll-arrow::after {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: var(--corn-gold);
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  transform: translateX(-50%);
+  animation: scrollPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0% { top: 6px; opacity: 1; }
+  100% { top: 16px; opacity: 0; }
+}
+
+/* ---- Navbar ---- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.4s ease, padding 0.4s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(26, 18, 8, 0.92);
+  backdrop-filter: blur(12px);
+  padding: 1rem 3rem;
+}
+
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--corn-gold);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--silk-cream);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+  color: var(--corn-gold);
+}
+
+/* ---- Recipe card ---- */
+.recipe-card {
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+}
+
+.recipe-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(26, 18, 8, 0.15);
+}
+
+.difficulty-badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+}
+
+.difficulty-badge.easy { background: #d4edda; color: #155724; }
+.difficulty-badge.medium { background: #fff3cd; color: #856404; }
+.difficulty-badge.hard { background: #f8d7da; color: #721c24; }
+
+/* ---- Nutrition card ---- */
+.nutrition-card {
+  border: 1px solid var(--corn-gold);
+  background: rgba(245, 200, 66, 0.05);
+  padding: 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s ease;
+}
+
+.nutrition-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--translucent-gold), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.nutrition-card:hover::before {
+  opacity: 1;
+}
+
+.counter-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--corn-gold);
+  line-height: 1;
+}
+
+/* ---- Variety card ---- */
+.variety-card {
+  min-width: 380px;
+  height: 80vh;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.variety-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  filter: sepia(0.1) saturate(1.1);
+}
+
+.variety-card:hover img {
+  transform: scale(1.05);
+}
+
+.variety-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,18,8,0.9) 0%, rgba(26,18,8,0.2) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem;
+}
+
+/* ---- Health benefit timeline ---- */
+.timeline-line {
+  position: absolute;
+  left: 28px;
+  top: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--corn-gold), transparent);
+  transform-origin: top;
+}
+
+.benefit-item {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem 0;
+}
+
+.benefit-icon {
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--corn-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  background: var(--silk-cream);
+  z-index: 1;
+}
+
+/* ---- Full-bleed image overlay ---- */
+.full-bleed-quote {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(26,18,8,0.5) 0%, rgba(26,18,8,0.2) 100%);
+}
+
+/* ---- Footer corn SVG ---- */
+.footer-stalk {
+  position: absolute;
+  bottom: 0;
+  right: 5%;
+  opacity: 0.06;
+  width: 200px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 1.5rem;
+  }
+
+  .navbar.scrolled {
+    padding: 0.75rem 1.5rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .variety-card {
+    min-width: 280px;
+    height: 60vh;
+  }
+
+  .display-title {
+    font-size: clamp(4rem, 20vw, 10rem) !important;
+  }
+}
+
+/* ---- Utility ---- */
+.overflow-hidden { overflow: hidden; }
+.will-change-transform { will-change: transform; }
+.clip-text {
+  overflow: hidden;
+  display: block;
+}
